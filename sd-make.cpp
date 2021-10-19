@@ -98,12 +98,13 @@ int main(int argc, char *argv[]){
   do{
     ifs = std::ifstream(*itrPath);
     int flag = 0;
+    std::size_t index;
     bool getFlag = false;
     std::string url = "";
     while(std::getline(ifs, tmp)){
       switch(flag){
         case 0:
-          for(std::size_t index = 0, getFlag = false; index < tmp.length(); index++){
+          for(index = 0, getFlag = false; index < tmp.length(); index++){
             if(tmp[index] == '['){
               getFlag = true;
               continue;
@@ -115,7 +116,8 @@ int main(int argc, char *argv[]){
           flag++;
         break;
         case 1:
-          tmp = "'" + url + "': " + tmp.substr(5);
+          for(index = 0; index < tmp.length(); index++) if(tmp[index] == '{');
+          tmp = "'" + url + "': " + tmp.substr(index - 1);
           flag++;
         case 2:
           mainSource += "\n  " + tmp;

@@ -1,5 +1,5 @@
 // [daretoku-eromanga.info]
-main={
+main = {
   main: ()=>{
     const r = {urls:[],title:''};
     var locate;
