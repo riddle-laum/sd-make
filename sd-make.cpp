@@ -125,7 +125,7 @@ int main(int argc, char *argv[]){
           flag++;
         break;
         case 1:
-          for(index = 0; index < tmp.length(); index++) if(tmp[index] == '{');
+          for(index = 0; index < tmp.length(); index++) if(tmp[index] == '{' || tmp[index] == 'c'); // class{ or {
           tmp = "'" + url + "': " + tmp.substr(index - 1);
           flag++;
         case 2:
