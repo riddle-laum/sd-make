@@ -125,8 +125,9 @@ int main(int argc, char *argv[]){
           flag++;
         break;
         case 1:
-          for(index = 0; index < tmp.length(); index++) if(tmp[index] == '{' || tmp[index] == 'c'); // class{ or {
+          for(index = 0; index < tmp.length(); index++) if(tmp[index] == '{' || tmp[index] == 'c') break; // class{ or {
           tmp = "'" + url + "': " + tmp.substr(index - 1);
+          std::cout << "[debug] " << tmp << std::endl;
           flag++;
         case 2:
           mainSource += "\n  " + tmp;
