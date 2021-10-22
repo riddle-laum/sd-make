@@ -100,6 +100,11 @@ int main(int argc, char *argv[]){
   ifs = std::ifstream("./main-src/deploy.mjs");
   while(std::getline(ifs, tmp)) mainSource += tmp + '\n';
   ifs.close();
+  // add assets
+  mainSource += '\n';
+  ifs = std::ifstream("./main-src/assets.mjs");
+  while(std::getline(ifs, tmp)) mainSource += tmp + '\n';
+  ifs.close();
   // add modules
   mainSource += "\n"
   "savedojin.modules = {";
@@ -127,7 +132,6 @@ int main(int argc, char *argv[]){
         case 1:
           for(index = 0; index < tmp.length(); index++) if(tmp[index] == '{' || tmp[index] == 'c') break; // class{ or {
           tmp = "'" + url + "': " + tmp.substr(index - 1);
-          std::cout << "[debug] " << tmp << std::endl;
           flag++;
         case 2:
           mainSource += "\n  " + tmp;
