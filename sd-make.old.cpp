@@ -2,11 +2,13 @@
 #include <string>
 #include <sstream>
 #include <fstream>
-#include <dirent.h>
 #include <iostream>
+#include <filesystem>
+
+// https://cpprefjp.github.io/reference/filesystem.html
 
 int main(int argc, char *argv[]){
-  // cmdline args
+  // cmdine args
   char update = 0;
   if(argc > 2){
     std::cout << "[sd-make] ERROR : too many commandline-arguments given" << std::endl;
@@ -65,19 +67,8 @@ int main(int argc, char *argv[]){
 
   // get file list
   std::vector<std::string> modules;
-  DIR *dp = opendir("./src/");
-  if(dp == nullptr) return 255;
-  dirent *entry = readdir(dp);
-  while(entry != nullptr){
-    if(std::string(entry->d_name) == "." || std::string(entry->d_name) == ".."){
-      std::cout << "[sd-make] skip " << std::string(entry->d_name) << std::endl;
-      entry = readdir(dp);
-      continue;
-    }
-    modules.push_back(std::string(entry->d_name));
-    std::cout << "./src/" << entry->d_name << std::endl;
-    entry = readdir(dp);
-  }
+  for(const auto & file : std::filesystem::directory_iterator("./src/"))
+    modules.push_back(file.path().string());
 
   // ----- main-src ----- //
   std::string tmp, mainSource = "// ----- main.js ----- //\n"
@@ -105,7 +96,7 @@ int main(int argc, char *argv[]){
   "savedojin.modules = {";
   auto itrPath = modules.begin();
   do{
-    ifs = std::ifstream("./src/" + *itrPath);
+    ifs = std::ifstream(*itrPath);
     int flag = 0;
     std::size_t index;
     bool getFlag = false;

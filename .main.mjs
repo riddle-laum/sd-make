@@ -5,7 +5,7 @@
 const savedojin = {};
 
 // constant
-savedojin.version = '2.0.0+29'
+savedojin.version = '2.0.0+12'
 
 // ----- main ----- //
 savedojin.main = async ()=>{
